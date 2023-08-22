@@ -7,6 +7,8 @@ Quando necessário vamos expandindo esse ambiente para incluir mais serviços Fi
 
 Agradecemos por participar da fase Beta de testes e contribuir para a evolução do Ambiente de Emulação Firebase.
 
+> Favor não fazer commits nesse repositório, o projeto deve ser padrão a todos.
+
 ## 1. Como criar um emulador firebase?
 É necessário que você tenha o `firebase-tools` instalado globalmente.
 
