@@ -34,7 +34,7 @@ No caso de ausência, por favor, proceda com a instalação do ambiente [Java JD
  
  > **Atenção: Não faça testes com as variáveis da seção "Firebase Connection" apontando para o servidor de deploy.**
 
-Para o frontend:
+Para o frontend em `.env`:
 ```py
 # Environment
 REACT_APP_NODE_ENV=development
@@ -47,10 +47,6 @@ REACT_APP_STORAGE_BUCKET=skcoders-firebase-emulators.appspot.com
 REACT_APP_MESSAGING_SENDER_ID=1033973860909
 REACT_APP_APP_ID=1:1033973860909:web:e28b5887acc9a98d5ac6a4
 REACT_APP_MEASUREMENT_ID=G-WK5YQB779Q
-
-# Emulators Connection
-FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099
-FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
 ```
 
 Para o backend (Ainda em estudo):
@@ -73,6 +69,19 @@ FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
 ```
 
 > _A investigação do comportamento no backend ainda está em andamento. Ao utilizar o pacote firebase-admin com Node.js, a documentação atual sugere que ao configurar as variáveis de ambiente especificadas, a biblioteca estabelecerá automaticamente a conexão apropriada com os emuladores locais._
+
+### 1.4 Operações de risco
+Caso for fazer operações em massa, tente optar por esse set de variáveis fake:
+```py
+# Firebase Connection
+REACT_APP_API_KEY=t3St34P1K3y
+REACT_APP_AUTH_DOMAIN=fake-skcoders-firebase-emulators.localemulator.com
+REACT_APP_PROJECT_ID=fake-skcoders-firebase-emulators
+REACT_APP_STORAGE_BUCKET=skcoders-firebase-emulators.nobucket.com
+REACT_APP_MESSAGING_SENDER_ID=5423689746523
+REACT_APP_APP_ID=1:5423689746523:web:H3LL01ss034p3n4Sum3mul4d0R
+REACT_APP_MEASUREMENT_ID=F-F0RF4K351D
+```
 
 ### 1.4 Iniciando emulador
 Neste ponto, é importante considerar a possibilidade de ocorrer um erro associado às portas. No entanto, saiba que abordaremos essa questão em detalhes posteriormente.
@@ -109,8 +118,18 @@ Os emuladores utilizam portas que podem conflitar de acordo com as configuraçõ
 
 ```
 
-A próxima etapa de correção envolve a configuração das variáveis de ambiente do projeto em consideração. O seguinte trecho de código exemplifica essa configuração:
+A próxima etapa de correção envolve a configuração das variáveis de ambiente do projeto em consideração. O seguinte trecho de código exemplifica essas configurações:
+
+Para o frontend em `firebaseSdk/index.js`, substitua as portas:
 ```js
+  connectAuthEmulator(auth, "http://127.0.0.1:XXXX");
+  connectFirestoreEmulator(firestoreDB, '127.0.0.1', YYYY);
+```
+
+> O firebase parece não gostar de usar variáveis de ambiente nessas funções.
+
+Para o backend em `.env`:
+```py
 FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:XXXX
 FIRESTORE_EMULATOR_HOST=127.0.0.1:YYYY
 ```
