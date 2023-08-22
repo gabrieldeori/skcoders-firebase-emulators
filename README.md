@@ -28,19 +28,49 @@ No caso de ausência, por favor, proceda com a instalação do ambiente [Java JD
 ### 1.3 Variáveis de ambiente
  **Nota: É possível que as funções de conexão com o banco de dados local ainda não tenham sido implementadas, nem no frontend nem no backend.**
  
- Agora basta incorporar as variáveis de ambiente ao seu projeto:
+ Agora basta incorporar as variáveis de ambiente ao seu projeto. Nessa documentação fornecerei variáveis de conexão com o firebase de um servidor próprio, mas isso deve ser ajustado.
+ 
+ > **Atenção: Não faça testes com as variáveis da seção "Firebase Connection" apontando para o servidor de deploy.**
 
-```js
-// Front
+Para o frontend:
+```py
+# Environment
 REACT_APP_NODE_ENV=development
-FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099
-FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
 
-// Back (Admin SDK)
-NODE_ENV=development
+# Firebase Connection
+REACT_APP_API_KEY=AIzaSyB9Gk7D967jdp0S2IXw6gAQVYJIs3RVH4k
+REACT_APP_AUTH_DOMAIN=skcoders-firebase-emulators.firebaseapp.com
+REACT_APP_PROJECT_ID=skcoders-firebase-emulators
+REACT_APP_STORAGE_BUCKET=skcoders-firebase-emulators.appspot.com
+REACT_APP_MESSAGING_SENDER_ID=1033973860909
+REACT_APP_APP_ID=1:1033973860909:web:e28b5887acc9a98d5ac6a4
+REACT_APP_MEASUREMENT_ID=G-WK5YQB779Q
+
+# Emulators Connection
 FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099
 FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
 ```
+
+Para o backend (Ainda em estudo):
+```py
+# Environment
+NODE_ENV=development
+
+# Firebase Connection
+NODE_API_KEY=AIzaSyB9Gk7D967jdp0S2IXw6gAQVYJIs3RVH4k
+NODE_AUTH_DOMAIN=skcoders-firebase-emulators.firebaseapp.com
+NODE_PROJECT_ID=skcoders-firebase-emulators
+NODE_STORAGE_BUCKET=skcoders-firebase-emulators.appspot.com
+NODE_MESSAGING_SENDER_ID=1033973860909
+NODE_APP_ID=1:1033973860909:web:e28b5887acc9a98d5ac6a4
+NODE_MEASUREMENT_ID=G-WK5YQB779Q
+
+# Emulators Connection
+FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099
+FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
+```
+
+> _A investigação do comportamento no backend ainda está em andamento. Ao utilizar o pacote firebase-admin com Node.js, a documentação atual sugere que ao configurar as variáveis de ambiente especificadas, a biblioteca estabelecerá automaticamente a conexão apropriada com os emuladores locais._
 
 ### 1.4 Iniciando emulador
 Neste ponto, é importante considerar a possibilidade de ocorrer um erro associado às portas. No entanto, saiba que abordaremos essa questão em detalhes posteriormente.
@@ -51,7 +81,9 @@ firebase emulators:start
 ```
 
 ### 1.5 Tratando erros de conexão nas portas
-Os emuladores utilizam portas que podem conflitar de acordo com as configurações locais de cada máquina. Caso ocorram problemas de conexão, sugiro que ajuste os valores das portas no arquivo `firebase.json`. Entretanto, é fundamental destacar que quaisquer alterações nesses valores não devem ser confirmadas por meio de commits no git do projeto:
+Os emuladores utilizam portas que podem conflitar de acordo com as configurações locais de cada máquina. Caso ocorram problemas de conexão, sugiro que ajuste os valores das portas no arquivo `firebase.json` para que as mesmas não conflitem com outras em uso. (Substitua nos XXXX e YYYY destacados)
+
+> Não faça commits com alterações no arquivo firebase.json. Mantenha a modificação apenas localmente.
 
 ```js
 {
@@ -75,7 +107,7 @@ Os emuladores utilizam portas que podem conflitar de acordo com as configuraçõ
 
 ```
 
-A próxima etapa envolve a configuração nas variáveis de ambiente do projeto em consideração. O seguinte trecho de código exemplifica essa configuração:
+A próxima etapa de correção envolve a configuração das variáveis de ambiente do projeto em consideração. O seguinte trecho de código exemplifica essa configuração:
 ```js
 FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:XXXX
 FIRESTORE_EMULATOR_HOST=127.0.0.1:YYYY
@@ -95,5 +127,3 @@ Existem vários recursos que podem ser emulados:
 A viabilidade de alguns recursos ainda está sendo testada.
 
 Um ponto a ser observado é a necessidade de autenticação para criar projetos, que abrangem áreas como armazenamento (Storage), Banco de Dados em Tempo Real (Realtime Database) e Funções (Functions). Além disso, para o funcionamento da aplicação, é essencial possuir um projeto real hospedado na nuvem.
-
-Vale mencionar que a ausência de uma conexão direta do firebaseConfig com o emulador foi deliberada por questões de segurança. Uma abordagem mais recomendada consiste em estabelecer um projeto na nuvem, de tipo "developer", em que possa se compartilhar com os desenvolvedores. Essa abordagem simplificaria a configuração da conexão de maneira segura e eficaz.
