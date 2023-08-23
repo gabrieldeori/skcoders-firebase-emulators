@@ -36,7 +36,7 @@ No caso de ausência, por favor, proceda com a instalação do ambiente [Java JD
 
  - Nessa documentação fornecerei variáveis de conexão com o firebase de um servidor próprio, mas isso deve ser ajustado com a equipe.
 
-Para o frontend em `.env`:
+#### 1.3.1 Para o frontend em `.env`:
 ```py
 # Environment
 REACT_APP_NODE_ENV=development
@@ -51,24 +51,35 @@ REACT_APP_APP_ID=1:1033973860909:web:e28b5887acc9a98d5ac6a4
 REACT_APP_MEASUREMENT_ID=G-WK5YQB779Q
 ```
 
-Para o backend (Ainda em estudo):
+#### 1.3.2 Para o backend (Ainda em estudo):
+Quando se busca estabelecer uma conexão intermediária entre o frontend e o banco de dados por meio de uma API, é comum recorrer à biblioteca `firebase-admin`. Essa abordagem envolve a utilização de contas de serviço para autenticar um administrador responsável por gerenciar as modificações no banco de dados.
+
+A configuração desse processo é efetuada da seguinte maneira:
+
+```js
+const admin = require("firebase-admin");
+
+const serviceAccount = require("path/to/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://nomeprojeto-default-rtdb.firebaseio.com",
+});
+```
+
+Um requisito crucial é a geração da chave serviceAccountKey que é feita pelo administrador do firebase.
+
+Prosseguindo para a ativação do emulador, a configuração das seguintes variáveis de ambiente é necessária:
+
 ```py
-# Environment
+# Ambiente
 NODE_ENV=development
 
-# Firebase Connection
-NODE_API_KEY=AIzaSyB9Gk7D967jdp0S2IXw6gAQVYJIs3RVH4k
-NODE_AUTH_DOMAIN=skcoders-firebase-emulators.firebaseapp.com
-NODE_PROJECT_ID=skcoders-firebase-emulators
-NODE_STORAGE_BUCKET=skcoders-firebase-emulators.appspot.com
-NODE_MESSAGING_SENDER_ID=1033973860909
-NODE_APP_ID=1:1033973860909:web:e28b5887acc9a98d5ac6a4
-NODE_MEASUREMENT_ID=G-WK5YQB779Q
-
-# Emulators Connection
+# Conexão com Emuladores
 FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099
 FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
 ```
+
 
 > _A investigação do comportamento no backend ainda está em andamento. Ao utilizar o pacote firebase-admin com Node.js, a documentação atual sugere que ao configurar as variáveis de ambiente especificadas, a biblioteca estabelecerá automaticamente a conexão apropriada com os emuladores locais._
 
