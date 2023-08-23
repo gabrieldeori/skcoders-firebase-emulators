@@ -75,10 +75,10 @@ Um requisito crucial é a geração da chave serviceAccountKey que é feita pelo
 Prosseguindo para a ativação do emulador, a configuração das seguintes variáveis de ambiente é necessária:
 
 ```py
-# Ambiente
+# Environment
 NODE_ENV=development
 
-# Conexão com Emuladores
+# Emulators
 FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9099
 FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
 ```
