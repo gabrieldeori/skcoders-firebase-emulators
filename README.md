@@ -9,7 +9,7 @@ Agradecemos por participar da fase Beta de testes e contribuir para a evolução
 
 > Favor não fazer commits nesse repositório, o projeto deve ser padrão a todos.
 
-## 1. Como criar um emulador firebase?
+## 1. Como criar emular o firebase?
 É necessário que você tenha o `firebase-tools` instalado globalmente.
 
 ### 1.1 Instalar firebase-tools
