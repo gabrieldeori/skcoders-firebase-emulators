@@ -30,9 +30,11 @@ No caso de ausência, por favor, proceda com a instalação do ambiente [Java JD
 ### 1.3 Variáveis de ambiente
  **Nota: É possível que as funções de conexão com o banco de dados local ainda não tenham sido implementadas, nem no frontend nem no backend.**
  
- Agora basta incorporar as variáveis de ambiente ao seu projeto. Nessa documentação fornecerei variáveis de conexão com o firebase de um servidor próprio, mas isso deve ser ajustado.
+ Agora basta incorporar as variáveis de ambiente ao seu projeto.
  
  > **Atenção: Não faça testes com as variáveis da seção "Firebase Connection" apontando para o servidor de deploy.**
+
+ - Nessa documentação fornecerei variáveis de conexão com o firebase de um servidor próprio, mas isso deve ser ajustado com a equipe.
 
 Para o frontend em `.env`:
 ```py
@@ -69,19 +71,6 @@ FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
 ```
 
 > _A investigação do comportamento no backend ainda está em andamento. Ao utilizar o pacote firebase-admin com Node.js, a documentação atual sugere que ao configurar as variáveis de ambiente especificadas, a biblioteca estabelecerá automaticamente a conexão apropriada com os emuladores locais._
-
-### 1.4 Operações de risco
-Caso for fazer operações em massa, tente optar por esse set de variáveis fake:
-```py
-# Firebase Connection
-REACT_APP_API_KEY=t3St34P1K3y
-REACT_APP_AUTH_DOMAIN=fake-skcoders-firebase-emulators.localemulator.com
-REACT_APP_PROJECT_ID=fake-skcoders-firebase-emulators
-REACT_APP_STORAGE_BUCKET=skcoders-firebase-emulators.nobucket.com
-REACT_APP_MESSAGING_SENDER_ID=5423689746523
-REACT_APP_APP_ID=1:5423689746523:web:H3LL01ss034p3n4Sum3mul4d0R
-REACT_APP_MEASUREMENT_ID=F-F0RF4K351D
-```
 
 ### 1.4 Iniciando emulador
 Neste ponto, é importante considerar a possibilidade de ocorrer um erro associado às portas. No entanto, saiba que abordaremos essa questão em detalhes posteriormente.
