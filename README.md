@@ -1,9 +1,11 @@
 # Ambiente de emulação Firebase (Beta)
-**Nota: Este projeto está atualmente em fase Beta e requer testes abrangentes com outros desenvolvedores para garantir sua confiabilidade e funcionalidade.**
+**Nota: Este projeto está atualmente em fase Beta e requer testes com outros desenvolvedores para validar sua praticidade.**
 
 O Ambiente de Emulação Firebase foi criado para simular o comportamento do Firestore e do Authentication do Firebase localmente, auxiliando no teste e desenvolvimento de apps.
 
-Quando necessário vamos expandindo esse ambiente para incluir mais serviços Firebase no futuro. Seu feedback é crucial para aprimorar essa ferramenta.
+Quando necessário é possível expandir esse ambiente para incluir mais serviços Firebase no futuro porém no momento contamos apenas com `authentication` e `firebase`.
+
+Seu feedback é crucial para aprimorar essa ferramenta.
 
 Agradecemos por participar da fase Beta de testes e contribuir para a evolução do Ambiente de Emulação Firebase.
 
@@ -17,7 +19,10 @@ Agradecemos por participar da fase Beta de testes e contribuir para a evolução
 npm i -g firebase-tools
 ```
 
-Por favor, verifique se está utilizando a versão mais recente do software de acordo com a [documentação do firebase](https://firebase.google.com/support/releases).
+Por favor, verifique se está utilizando a versão mais recente do software de acordo com a documentação do firebase.
+
+[Acesse as versões aqui](https://firebase.google.com/support/releases).
+
 ```sh
 firebase --version
 ```
@@ -28,13 +33,9 @@ No caso de ausência, por favor, proceda com a instalação do ambiente [Java JD
 É aconselhável escolher versões ditas estáveis ou suportada a longo prazo (LTS).
 
 ### 1.3 Variáveis de ambiente
- **Nota: É possível que as funções de conexão com o banco de dados local ainda não tenham sido implementadas, nem no frontend nem no backend.**
- 
- Agora basta incorporar as variáveis de ambiente ao seu projeto.
- 
- > **Atenção: Não faça testes com as variáveis da seção "Firebase Connection" apontando para o servidor de deploy.**
+ Incorpore as variáveis de ambiente ao seu projeto.
 
- - Nessa documentação fornecerei variáveis de conexão com o firebase de um servidor próprio, mas isso deve ser ajustado com a equipe.
+###### Nessa documentação fornecerei variáveis de conexão com o firebase de um servidor particular, mas isso deve ser ajustado no futuro com um servidor oficial.
 
 #### 1.3.1 Para o frontend em `.env`:
 ```py
@@ -50,6 +51,8 @@ REACT_APP_MESSAGING_SENDER_ID=1033973860909
 REACT_APP_APP_ID=1:1033973860909:web:e28b5887acc9a98d5ac6a4
 REACT_APP_MEASUREMENT_ID=G-WK5YQB779Q
 ```
+
+**Atenção: Não faça testes com as variáveis da seção "Firebase Connection" apontando para o servidor de deploy.**
 
 #### 1.3.2 Para o backend (Ainda em estudo):
 Quando se busca estabelecer uma conexão intermediária entre o frontend e o banco de dados por meio de uma API, é comum recorrer à biblioteca `firebase-admin`. Essa abordagem envolve a utilização de contas de serviço para autenticar um administrador responsável por gerenciar as modificações no banco de dados.
@@ -81,7 +84,7 @@ FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
 ```
 
 
-> _A investigação do comportamento no backend ainda está em andamento. Ao utilizar o pacote firebase-admin com Node.js, a documentação atual sugere que ao configurar as variáveis de ambiente especificadas, a biblioteca estabelecerá automaticamente a conexão apropriada com os emuladores locais._
+A investigação do comportamento no backend ainda está em andamento. Ao utilizar o pacote firebase-admin com Node.js, a documentação atual sugere que ao configurar as variáveis de ambiente especificadas, a biblioteca estabelecerá automaticamente a conexão apropriada com os emuladores locais.
 
 ### 1.4 Iniciando emulador
 Neste ponto, é importante considerar a possibilidade de ocorrer um erro associado às portas. No entanto, saiba que abordaremos essa questão em detalhes posteriormente.
@@ -104,10 +107,10 @@ Os emuladores utilizam portas que podem conflitar de acordo com as configuraçõ
   },
   "emulators": {
     "auth": {
-      "port": XXXX
+      "port": XXXX // Modifique aqui
     },
     "firestore": {
-      "port": YYYY
+      "port": YYYY // Modifique aqui
     },
     "ui": {
       "enabled": true
@@ -122,8 +125,8 @@ A próxima etapa de correção envolve a configuração das variáveis de ambien
 
 Para o frontend em `firebaseSdk/index.js`, substitua as portas:
 ```js
-  connectAuthEmulator(auth, "http://127.0.0.1:XXXX");
-  connectFirestoreEmulator(firestoreDB, '127.0.0.1', YYYY);
+  connectAuthEmulator(auth, "http://127.0.0.1:XXXX"); // auth
+  connectFirestoreEmulator(firestoreDB, '127.0.0.1', YYYY); // firestore
 ```
 
 > O firebase parece não gostar de usar variáveis de ambiente nessas funções.
@@ -133,8 +136,6 @@ Para o backend em `.env`:
 FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:XXXX
 FIRESTORE_EMULATOR_HOST=127.0.0.1:YYYY
 ```
-
-Recomenda-se verificar se o sistema está funcionando corretamente, pois pode ocorrer conflito com as portas atualmente configuradas. Caso seja o caso, é possível efetuar as seguintes modificações: ajustar as portas em conflito no arquivo firebase.json e também nas variáveis de ambiente.
 
 ## Outros recursos
 Existem vários recursos que podem ser emulados:
